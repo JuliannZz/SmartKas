@@ -64,7 +64,7 @@ const Login = () => {
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label className="text-sm font-semibold text-slate-700 mb-2 block">
-                Username
+                Email
               </label>
               <div className="relative">
                 <UserIcon
@@ -76,7 +76,7 @@ const Login = () => {
                   placeholder="Masukkan email"
                   value={formData.email}
                   onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
+                    setFormData({ ...formData, email: e.target.value.toLowerCase() })
                   }
                   className="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 transition-all"
                   required
@@ -123,12 +123,6 @@ const Login = () => {
                 />
                 <span className="text-sm text-slate-600">Ingat saya</span>
               </label>
-              <button
-                type="button"
-                className="text-sm text-orange-500 hover:text-orange-600 font-medium transition-colors"
-              >
-                Lupa password?
-              </button>
             </div>
 
             <button

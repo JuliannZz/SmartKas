@@ -117,7 +117,7 @@ const Register = () => {
                   placeholder="Masukkan email"
                   value={formData.email}
                   onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
+                    setFormData({ ...formData, email: e.target.value.toLowerCase() })
                   }
                   className="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 transition-all"
                   required

@@ -25,17 +25,9 @@ const authService = {
     return response.data;
   },
 
-  getCurrentUser() {
+  getCurrentUser: () => {
     const user = localStorage.getItem('user');
-
-    try {
-      return user ? JSON.parse(user) : null;
-    } catch (error) {
-      return {
-        email: user,
-        name: 'Admin',
-      };
-    }
+    return user ? JSON.parse(user) : null;
   },
 
   getToken: () => {
