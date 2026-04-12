@@ -69,7 +69,7 @@ const Product = () => {
           />
         </div>
 
-        <div className="bg-white rounded-2xl shadow-md p-5 relative border-l-4 border-red-400">
+        <div className="bg-white rounded-2xl shadow-md p-5 relative">
           <p className="text-sm text-slate-500 font-medium">Stok Rendah</p>
           <h3 className="text-2xl font-bold text-red-500 mt-1">
             {loading ? '—' : summary.lowStock}
