@@ -4,7 +4,6 @@ import {
   ArrowUpRight,
   ArrowDownRight,
   AlertTriangle,
-  BarChart3,
 } from 'lucide-react';
 import {
   BarChart,
