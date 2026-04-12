@@ -46,39 +46,32 @@ const Product = () => {
     <div className="space-y-6">
       {/* Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-        <div className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl shadow-md p-5 text-white relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -translate-y-4 translate-x-4"></div>
-          <p className="text-sm text-orange-100 font-medium">Total Produk</p>
-          <h3 className="text-3xl font-bold mt-1">
-            {loading ? '—' : summary.totalProducts}
-          </h3>
-          <Package
-            size={28}
-            className="absolute top-5 right-5 text-white/40"
-          />
-        </div>
+        <StatCard
+          title="Total Produk"
+          value={loading ? '—' : summary.totalProducts}
+          icon={Package}
+          iconBg="bg-orange-100"
+          iconColor="text-orange-500"
+          subtitle="Jumlah seluruh produk"
+        />
 
-        <div className="bg-white rounded-2xl shadow-md p-5 relative">
-          <p className="text-sm text-slate-500 font-medium">Nilai Inventori</p>
-          <h3 className="text-2xl font-bold text-slate-800 mt-1">
-            {loading ? '—' : formatRupiah(summary.inventoryValue)}
-          </h3>
-          <DollarSign
-            size={28}
-            className="absolute top-5 right-5 text-orange-400"
-          />
-        </div>
+        <StatCard
+          title="Nilai Inventori"
+          value={loading ? '—' : formatRupiah(summary.inventoryValue)}
+          icon={DollarSign}
+          iconBg="bg-emerald-100"
+          iconColor="text-emerald-500"
+          subtitle="Total nilai stok"
+        />
 
-        <div className="bg-white rounded-2xl shadow-md p-5 relative">
-          <p className="text-sm text-slate-500 font-medium">Stok Rendah</p>
-          <h3 className="text-2xl font-bold text-red-500 mt-1">
-            {loading ? '—' : summary.lowStock}
-          </h3>
-          <BarChart3
-            size={28}
-            className="absolute top-5 right-5 text-red-300"
-          />
-        </div>
+        <StatCard
+          title="Stok Rendah"
+          value={loading ? '—' : summary.lowStock}
+          icon={BarChart3}
+          iconBg="bg-red-100"
+          iconColor="text-red-500"
+          subtitle="Perlu restok"
+        />
       </div>
 
       {/* Product Table */}
