@@ -48,9 +48,6 @@ const RecentTransactions = ({ transactions, stockAlerts, loading }) => {
           <h3 className="text-base font-bold text-slate-800">
             Transaksi Terbaru
           </h3>
-          <button className="text-sm text-orange-500 hover:text-orange-600 font-semibold transition-colors">
-            Lihat Semua
-          </button>
         </div>
 
         <div className="space-y-3">
