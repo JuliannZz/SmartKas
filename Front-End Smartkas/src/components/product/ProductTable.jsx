@@ -437,7 +437,7 @@ const ProductTable = () => {
                     </span>
                     <input
                       type="number"
-                      placeholder="Masukkan Harga Beli"
+                      placeholder="0"
                       value={formData.buyPrice}
                       onChange={(e) =>
                         setFormData({
@@ -460,7 +460,7 @@ const ProductTable = () => {
                     </span>
                     <input
                       type="number"
-                      placeholder="Masukkan Harga Jual"
+                      placeholder="0"
                       value={formData.sellPrice}
                       onChange={(e) =>
                         setFormData({
@@ -482,6 +482,7 @@ const ProductTable = () => {
                   </label>
                   <input
                     type="number"
+                    placeholder="0"
                     value={formData.stock}
                     onChange={(e) =>
                       setFormData({
