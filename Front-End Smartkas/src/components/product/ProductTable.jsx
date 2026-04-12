@@ -17,9 +17,9 @@ const ProductTable = () => {
     name: '',
     description: '',
     category: 'Sembako',
-    buyPrice: 0,
-    sellPrice: 0,
-    stock: 0,
+    buyPrice: '',
+    sellPrice: '',
+    stock: '',
     minStock: 10,
     unit: 'Pcs',
   });
@@ -44,12 +44,22 @@ const ProductTable = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const payload = {
+      ...formData,
+      buyPrice: Number(formData.buyPrice),
+      sellPrice: Number(formData.sellPrice),
+      stock: Number(formData.stock),
+      minStock: Number(formData.minStock),
+    };
+
     try {
       if (editingProduct) {
-        await productService.update(editingProduct.id, formData);
+        await productService.update(editingProduct.id, payload);
       } else {
-        await productService.create(formData);
+        await productService.create(payload);
       }
+
       setShowModal(false);
       setEditingProduct(null);
       resetForm();
@@ -66,9 +76,9 @@ const ProductTable = () => {
       name: product.name || '',
       description: product.description || '',
       category: product.category || 'Sembako',
-      buyPrice: product.buyPrice || 0,
-      sellPrice: product.sellPrice || 0,
-      stock: product.stock || 0,
+      buyPrice: product.buyPrice?.toString() || '',
+      sellPrice: product.sellPrice?.toString() || '',
+      stock: product.stock?.toString() || '',
       minStock: product.minStock || 10,
       unit: product.unit || 'Pcs',
     });
@@ -92,9 +102,9 @@ const ProductTable = () => {
       name: '',
       description: '',
       category: 'Sembako',
-      buyPrice: 0,
-      sellPrice: 0,
-      stock: 0,
+      buyPrice: '',
+      sellPrice: '',
+      stock: '',
       minStock: 10,
       unit: 'Pcs',
     });
@@ -427,11 +437,12 @@ const ProductTable = () => {
                     </span>
                     <input
                       type="number"
+                      placeholder="Masukkan Harga Beli"
                       value={formData.buyPrice}
                       onChange={(e) =>
                         setFormData({
                           ...formData,
-                          buyPrice: Number(e.target.value),
+                          buyPrice: e.target.value,
                         })
                       }
                       className="w-full pl-10 pr-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400"
@@ -449,11 +460,12 @@ const ProductTable = () => {
                     </span>
                     <input
                       type="number"
+                      placeholder="Masukkan Harga Jual"
                       value={formData.sellPrice}
                       onChange={(e) =>
                         setFormData({
                           ...formData,
-                          sellPrice: Number(e.target.value),
+                          sellPrice: e.target.value,
                         })
                       }
                       className="w-full pl-10 pr-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400"
@@ -466,7 +478,7 @@ const ProductTable = () => {
               <div className="grid grid-cols-3 gap-4">
                 <div>
                   <label className="text-sm font-semibold text-slate-700 mb-1 block">
-                    Stok Awal *
+                    Stok *
                   </label>
                   <input
                     type="number"
@@ -474,7 +486,7 @@ const ProductTable = () => {
                     onChange={(e) =>
                       setFormData({
                         ...formData,
-                        stock: Number(e.target.value),
+                        stock: e.target.value,
                       })
                     }
                     className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400"
