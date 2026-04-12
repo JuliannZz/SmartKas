@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Pencil, Trash2, Search, Plus, Download } from 'lucide-react';
 import productService from '../../services/productService';
 
-const categories = ['Semua', 'Sembako', 'Protein', 'Minuman', 'Snack', 'Bumbu', 'Toiletries'];
+const categories = ['Semua', 'Sembako', 'Makanan', 'Minuman', 'Snack', 'Alat Tulis', 'Lainnya'];
 
 const ProductTable = () => {
   const [products, setProducts] = useState([]);
@@ -157,19 +157,15 @@ const ProductTable = () => {
             placeholder="Cari produk (nama atau SKU)..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 transition-all"
+            className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 transition-all"
           />
         </div>
         <div className="flex gap-2">
-          <select className="px-4 py-3 rounded-xl border border-slate-200 text-sm text-slate-600 focus:outline-none focus:ring-2 focus:ring-orange-500/20 cursor-pointer">
+          <select className="px-4 py-3 rounded-xl border border-slate-300 text-sm text-slate-600 focus:outline-none focus:ring-2 focus:ring-orange-500/20 cursor-pointer">
             <option>Semua</option>
             <option>Terbaru</option>
             <option>Stok Rendah</option>
           </select>
-          <button className="flex items-center gap-2 px-4 py-3 rounded-xl border border-slate-200 text-sm text-slate-600 hover:bg-slate-50 transition-colors">
-            <Download size={16} />
-            Export
-          </button>
           <button
             onClick={openAddModal}
             className="flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-xl text-sm font-semibold hover:from-orange-600 hover:to-orange-700 shadow-md shadow-orange-200 transition-all"
