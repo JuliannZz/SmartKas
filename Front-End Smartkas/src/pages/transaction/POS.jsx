@@ -5,8 +5,6 @@ import {
   Minus,
   Trash2,
   ShoppingCart,
-  CreditCard,
-  Banknote,
   Receipt,
 } from 'lucide-react';
 import api from '../../services/api';
@@ -18,7 +16,6 @@ const POS = () => {
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState('cash');
   const [cashAmount, setCashAmount] = useState(0);
   const [showReceipt, setShowReceipt] = useState(false);
   const [lastTransaction, setLastTransaction] = useState(null);
@@ -77,6 +74,12 @@ const POS = () => {
 
   const handleCheckout = async () => {
     if (cart.length === 0) return;
+
+    if (cashAmount < total) {
+      alert('Uang kurang!');
+      return;
+    }
+
     setProcessing(true);
 
     try {
@@ -87,12 +90,17 @@ const POS = () => {
           price: item.sellPrice,
         })),
         total,
-        paymentMethod,
-        cashAmount: paymentMethod === 'cash' ? cashAmount : total,
+        cashAmount,
       };
 
       const response = await transactionService.create(txData);
-      setLastTransaction({ ...txData, id: response?.data?.id, date: new Date() });
+
+      setLastTransaction({
+        ...txData,
+        id: response?.data?.id,
+        date: new Date(),
+      });
+
       setShowReceipt(true);
       setCart([]);
       setCashAmount(0);
@@ -149,9 +157,8 @@ const POS = () => {
                   key={product.id}
                   onClick={() => addToCart(product)}
                   disabled={product.stock <= 0}
-                  className={`bg-white rounded-2xl shadow-sm border border-slate-100 p-4 text-left hover:shadow-md hover:border-orange-200 transition-all ${
-                    product.stock <= 0 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
-                  }`}
+                  className={`bg-white rounded-2xl shadow-sm border border-slate-100 p-4 text-left hover:shadow-md hover:border-orange-200 transition-all ${product.stock <= 0 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
+                    }`}
                 >
                   <div className="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center mb-3">
                     <span className="text-orange-500 font-bold text-sm">
@@ -249,33 +256,7 @@ const POS = () => {
             <span className="text-orange-500">Rp {formatRupiah(total)}</span>
           </div>
 
-          {/* Payment Method */}
-          <div className="flex gap-2">
-            <button
-              onClick={() => setPaymentMethod('cash')}
-              className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-semibold border transition-all ${
-                paymentMethod === 'cash'
-                  ? 'bg-orange-50 border-orange-400 text-orange-600'
-                  : 'bg-white border-slate-200 text-slate-500 hover:border-slate-300'
-              }`}
-            >
-              <Banknote size={16} />
-              Tunai
-            </button>
-            <button
-              onClick={() => setPaymentMethod('transfer')}
-              className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-semibold border transition-all ${
-                paymentMethod === 'transfer'
-                  ? 'bg-orange-50 border-orange-400 text-orange-600'
-                  : 'bg-white border-slate-200 text-slate-500 hover:border-slate-300'
-              }`}
-            >
-              <CreditCard size={16} />
-              Transfer
-            </button>
-          </div>
-
-          {paymentMethod === 'cash' && cart.length > 0 && (
+          {cart.length > 0 && (
             <div>
               <label className="text-xs font-semibold text-slate-500 mb-1 block">
                 Uang Dibayar
@@ -305,7 +286,7 @@ const POS = () => {
             disabled={
               cart.length === 0 ||
               processing ||
-              (paymentMethod === 'cash' && cashAmount < total)
+              (cashAmount < total)
             }
             className="w-full py-3.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-xl text-sm font-bold hover:from-orange-600 hover:to-orange-700 shadow-md shadow-orange-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
