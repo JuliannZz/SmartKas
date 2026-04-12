@@ -20,22 +20,6 @@ const RecentTransactions = ({ transactions, stockAlerts, loading }) => {
     );
   }
 
-  const defaultTransactions = [
-    { id: 1, product: 'Minyak Goreng 1L', qty: '10 item', time: '10 menit lalu', amount: 150000, type: 'in' },
-    { id: 2, product: 'Beras Premium 5kg', qty: '2 item', time: '25 menit lalu', amount: 350000, type: 'in' },
-    { id: 3, product: 'Gula Pasir 1kg', qty: '30 item', time: '1 jam lalu', amount: 200000, type: 'out' },
-    { id: 4, product: 'Telur 1kg', qty: '15 item', time: '2 jam lalu', amount: 420000, type: 'in' },
-  ];
-
-  const defaultStockAlerts = [
-    { id: 1, product: 'Minyak Goreng 1L', stock: 5, minStock: 20, unit: 'pcs' },
-    { id: 2, product: 'Tepung Terigu 1kg', stock: 8, minStock: 15, unit: 'pcs' },
-    { id: 3, product: 'Kopi Bubuk 100g', stock: 3, minStock: 10, unit: 'pcs' },
-  ];
-
-  const displayTransactions = transactions || defaultTransactions;
-  const displayAlerts = stockAlerts || defaultStockAlerts;
-
   const formatRupiah = (num) => {
     return new Intl.NumberFormat('id-ID').format(num);
   };
@@ -68,9 +52,8 @@ const RecentTransactions = ({ transactions, stockAlerts, loading }) => {
                 </div>
               </div>
               <p
-                className={`text-sm font-bold ${
-                  tx.type === 'in' ? 'text-emerald-500' : 'text-slate-700'
-                }`}
+                className={`text-sm font-bold ${tx.type === 'in' ? 'text-emerald-500' : 'text-slate-700'
+                  }`}
               >
                 {tx.type === 'in' ? '+' : ''}Rp {formatRupiah(tx.amount)}
               </p>
