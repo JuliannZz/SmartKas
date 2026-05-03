@@ -18,6 +18,8 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  LineChart,
+  Line,
   AreaChart,
   Area,
 } from 'recharts';
