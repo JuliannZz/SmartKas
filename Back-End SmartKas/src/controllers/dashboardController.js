@@ -213,9 +213,12 @@ exports.getStockStats = async (req, res) => {
     `, [userId, currentMonth, currentYear]);
 
     const [stockInRes] = await pool.query(`
-      SELECT SUM(stock) as stock_in
-      FROM products
-      WHERE user_id = ? AND MONTH(created_at) = ? AND YEAR(created_at) = ?
+      SELECT SUM(
+        p.stock + 
+        COALESCE((SELECT SUM(ti.quantity) FROM transaction_items ti WHERE ti.product_id = p.id), 0)
+      ) as stock_in
+      FROM products p
+      WHERE p.user_id = ? AND MONTH(p.created_at) = ? AND YEAR(p.created_at) = ?
     `, [userId, currentMonth, currentYear]);
 
     const [movementOut] = await pool.query(`
@@ -231,11 +234,14 @@ exports.getStockStats = async (req, res) => {
 
     const [movementIn] = await pool.query(`
       SELECT 
-        DATE_FORMAT(created_at, '%b') as month,
-        MONTH(created_at) as month_num,
-        SUM(stock) as masuk
-      FROM products
-      WHERE user_id = ? AND YEAR(created_at) = YEAR(CURRENT_DATE())
+        DATE_FORMAT(p.created_at, '%b') as month,
+        MONTH(p.created_at) as month_num,
+        SUM(
+          p.stock + 
+          COALESCE((SELECT SUM(ti.quantity) FROM transaction_items ti WHERE ti.product_id = p.id), 0)
+        ) as masuk
+      FROM products p
+      WHERE p.user_id = ? AND YEAR(p.created_at) = YEAR(CURRENT_DATE())
       GROUP BY month, month_num
     `, [userId]);
 
